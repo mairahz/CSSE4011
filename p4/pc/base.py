@@ -19,6 +19,8 @@ dt = 0.1 #update interval (seconds)
 #beacons and their physical coordinates (x, y, d) in meters
 # ibeacons = [[0,0,0], [4,0,0], [4,4,0], [0,4,0]]
 ibeacons = [[0,0,0], [4,0,0]]
+# beacon coordinates
+beacons = [[0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0]]
 #Kalman filter settings
 A = numpy.array([(1, 0, dt, 0), (0, 1, 0, dt), (0, 0, 1, 0), (0, 0, 0, 1)]) #[x, y, vx, vy]
 #observation vector [x_rs, y_rs, x_us, y_us] - fusion = (0.5x_rs + 0.5x_us, 0.5y_rs + 0.5y_us)
@@ -164,12 +166,22 @@ def estimate_location(beacons):
 
 def knn(data, query, k):
     neighbour_distances_and_indices = []
+         val = example[1][1]
+         y_val1 = euclidean_distance(val[0], val[1])
+         y_val2 = euclidean_distance(val[1], val[2])
+         y_val = y_val1 + y_val2
+         query_data = (query[0], y_val)
     # For each example [[x, y], [rssi, [top 3 nodes]]] data in data
     for index, example in enumerate(data):
         # Calculate the distance between the query example and the current example from the data
-        # distance = euclidean_distance(example[:-1], query)
+         val = example[1][1]
+         y_val1 = euclidean_distance(val[0], val[1])
+         y_val2 = euclidean_distance(val[1], val[2])
+         y_val = y_val1 + y_val2
+         example_data = (example[1][0], y_val)
+         distance = euclidean_distance(example_data, query_data)
         # print(example[:-1][0])
-        distance = abs(example[:-1][0] - query)
+#         distance = abs(example[:-1][0] - query)
 
         # Add the distance and the index of the example to an ordered collection
         neighbour_distances_and_indices.append((distance, index))
