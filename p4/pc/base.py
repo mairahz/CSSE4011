@@ -169,7 +169,8 @@ def knn(data, query, k):
          val = example[1][1]
          y_val1 = euclidean_distance(val[0], val[1])
          y_val2 = euclidean_distance(val[1], val[2])
-         y_val = y_val1 + y_val2
+         y_val3 = euclidean_distance(val[0], val[2])
+         y_val = (y_val1 + y_val2 + yval3)/3
          query_data = (query[0], y_val)
     # For each example [[x, y], [rssi, [top 3 nodes]]] data in data
     for index, example in enumerate(data):
@@ -177,7 +178,8 @@ def knn(data, query, k):
          val = example[1][1]
          y_val1 = euclidean_distance(val[0], val[1])
          y_val2 = euclidean_distance(val[1], val[2])
-         y_val = y_val1 + y_val2
+         y_val3 = euclidean_distance(val[0], val[2])
+         y_val = y_val1 + y_val2 + yval3)/3
          example_data = (example[1][0], y_val)
          distance = euclidean_distance(example_data, query_data)
         # print(example[:-1][0])
